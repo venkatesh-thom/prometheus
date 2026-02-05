@@ -4,16 +4,17 @@ global:
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
   # scrape_timeout is set to the global default (10s).
 
-# Alertmanager configuration to send alerts to Alertmanager running on localhost:9093
+# Alertmanager configuration for sending alerts  to Alertmanager.     
 alerting:
   alertmanagers:
     - static_configs:
         - targets:
-            - "localhost:9093" # Alertmanager is running on the same host as Prometheus, adjust if it's different.
+            - "localhost:9093"
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
   - "alert-rules/*.yml"
+ 
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
