@@ -4,17 +4,16 @@ global:
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
   # scrape_timeout is set to the global default (10s).
 
-# Alertmanager configuration
+# Alertmanager configuration to send alerts to Alertmanager running on localhost:9093
 alerting:
   alertmanagers:
     - static_configs:
         - targets:
-          - "localhost:9093"
+            - "localhost:9093" # Alertmanager is running on the same host as Prometheus, adjust if it's different.
 
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 rule_files:
-  - "alert-rules/*.yaml"
-  # - "second_rules.yml"
+  - "alert-rules/*.yml"
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
@@ -27,7 +26,7 @@ scrape_configs:
 
     static_configs:
       - targets: ["localhost:9090"]
-       # The label name is added as a label `label_name=<label_value>` to any timeseries scraped from this config.
+        # The label name is added as a label `label_name=<label_value>` to any timeseries scraped from this config.
         labels:
           app: "prometheus"
 
@@ -43,8 +42,8 @@ scrape_configs:
       - region: us-east-1
         port: 9100
         filters:
-        - name: "tag:Monitoring"
-          values: ["true"]
+          - name: "tag:Monitoring"
+            values: ["true"]
 
     relabel_configs:
       - source_labels: [__meta_ec2_instance_id]
